@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Appointment & Refund Policy – Barber Effect</title>
+  <meta name="description" content="Barber Effect appointment and refund policy: scheduling, cancellations, no-shows, and refunds." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f1115;
+      --txt:#e9eef5;
+      --muted:#b6c0cf;
+      --brand:#d4a373;
+      --card:#171a21;
+      --shadow: 0 20px 40px rgba(0,0,0,.35);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:"Poppins", system-ui;
+      background: radial-gradient(1200px 800px at 50% -200px, #1a1f2b 0%, var(--bg) 55%);
+      color:var(--txt);
+    }
+
+    /* Header (simple) */
+    .site-header{
+      position: sticky; top:0; z-index:10;
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 10px 16px;
+      background: rgba(15,17,21,.6);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .brand img{ height: 56px; display:block }
+
+    .top-nav a{
+      text-decoration:none; color:var(--txt);
+      padding:8px 12px; border-radius:10px;
+      border:1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.06);
+      font-size:14px;
+    }
+    .top-nav a:hover{ background: rgba(255,255,255,.12) }
+
+    /* Main content */
+    .container{ max-width: 960px; margin: 28px auto 60px; padding: 0 16px; }
+    .card{
+      background: linear-gradient(180deg, rgba(23,26,33,.65), rgba(23,26,33,.85));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(18px, 2.5vw, 28px);
+    }
+
+    h1{
+      margin:0 0 10px 0;
+      font-size: clamp(18px, 2.4vw, 26px);
+      font-weight:700;
+      display:inline-block;
+      padding:8px 14px;
+      border-radius:999px;
+      background: rgba(212,163,115,.14);
+      border:1px solid rgba(212,163,115,.35);
+    }
+    .subtitle{ color:var(--muted); margin:8px 0 20px 0; font-size:14px }
+
+    h2{
+      font-size: clamp(18px, 2.4vw, 22px);
+      margin: 22px 0 10px 0;
+    }
+
+    p{ line-height:1.65; color:var(--txt); margin: 10px 0 }
+    ul{ margin: 8px 0 16px 0; padding-left: 20px }
+    li{ margin: 6px 0; line-height:1.6; color:var(--txt) }
+    .muted{ color:var(--muted) }
+
+    /* (Artık kullanılmıyor ama istersen ilerde kullanırsın)
+    .notice{
+      border-left: 3px solid var(--brand);
+      padding: 10px 14px;
+      background: rgba(212,163,115,.07);
+      border-radius: 12px;
+      margin-top: 10px;
+      color: var(--txt);
+    } */
+
+    /* Footer */
+    footer{
+      margin: 28px 0 40px; text-align:center; color:#cbd5e1; font-size:12px;
+    }
+
+    @media (max-width: 640px){
+      .brand img{ height: 48px }
+      .top-nav a{ font-size:13px; padding:7px 10px }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Back to Home">
+      <picture>
+        <source srcset="/images/logo.webp" type="image/webp">
+        <img src="/images/logo.png" alt="Barber Effect Logo">
+      </picture>
+    </a>
+    <nav class="top-nav" aria-label="Top navigation">
+      <a href="/">Home</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <article class="card" aria-labelledby="title">
+      <header>
+        <h1 id="title">Appointment & Refund Policy</h1>
+        <p class="subtitle">We appreciate your business and want to ensure a smooth experience for all our clients. Please review our appointment policy below.</p>
+      </header>
+
+      <section id="communications">
+        <h2>Communications</h2>
+        <ul>
+          <li>All communication is provided via confirmation and follow-up emails. Please enter the email address you check most frequently.</li>
+        </ul>
+      </section>
+
+      <section id="appointments">
+        <h2>Appointments</h2>
+        <ul>
+          <li>The service purchased is valid only for the specific time you selected, not for any time of day.</li>
+          <li>We recommend arriving <strong>5 minutes</strong> before your scheduled time to relax and prepare for your service.</li>
+        </ul>
+      </section>
+
+      <section id="arrival">
+        <h2>On-Time Arrival & Grace Period</h2>
+        <ul>
+          <li>A courtesy <strong>5-minute</strong> grace period is offered.</li>
+          <li>Arriving more than 5 minutes late will be considered a <strong>no-show</strong>.</li>
+        </ul>
+      </section>
+
+      <section id="no-shows">
+        <h2>No-Shows</h2>
+        <ul>
+          <li>No-shows or missed appointments are charged the <strong>full amount</strong> of the service and are <strong>non-refundable</strong>.</li>
+        </ul>
+      </section>
+
+      <section id="cancellations">
+        <h2>Cancellations & Rescheduling</h2>
+        <ul>
+          <li><strong>Make changes yourself</strong> (cancel or reschedule) using the links in your confirmation email.</li>
+          <li><strong>Cut-off time:</strong> Any change must be made at least <strong>1 hour</strong> prior to your appointment time.</li>
+          <li><strong>Free cancellations:</strong> With at least 1 hour’s notice, you will be refunded in full.</li>
+          <li><strong>Late cancellations:</strong> Within 1 hour of your appointment, the full amount of the service will be charged.</li>
+          <li><strong>Accepted method:</strong> Use the self-service link in the confirmation email or call us before the 1-hour cut-off. Other email messages are not accepted for cancellations.</li>
+        </ul>
+        <!-- Artık normal paragraf, arkaplan yok -->
+        <p class="muted">Find the links you need in the confirmation email you received from us.</p>
+      </section>
+
+      <section id="refunds">
+        <h2>Refunds</h2>
+        <ul>
+          <li>If you canceled via the confirmation email link, <strong>no further action</strong> is required.</li>
+          <li>Refunds are typically processed within <strong>10 business days</strong>.</li>
+        </ul>
+      </section>
+
+      <section id="service-refusal">
+        <h2>Service Refusal</h2>
+        <ul>
+          <li>We reserve the right to refuse service to anyone.</li>
+        </ul>
+      </section>
+
+      <section id="contact">
+        <h2>Questions?</h2>
+        <p class="muted">If you have any questions about this policy or need assistance, please contact the location you booked:</p>
+        <ul>
+          <li><strong>Fairfax:</strong> <a href="tel:+15713477206">+1 571-347-7206</a></li>
+          <li><strong>Merrifield:</strong> <a href="tel:+17038912095">+1 703-891-2095</a></li>
+        </ul>
+        <p class="muted">Last updated: <time datetime="2025-09-16">September 16, 2025</time></p>
+      </section>
+    </article>
+  </main>
+
+  <footer>
+    © <span id="year"></span> Barber Effect · All rights reserved.
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

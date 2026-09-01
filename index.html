@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barber Effect - Interactive Wireframe</title>
+  <style>
+    :root {
+      --bg-dark: #121212;
+      --card-bg: #1e1e1e;
+      --accent-gold: #d4af37;
+      --accent-gold-hover: #f1c40f;
+      --text-main: #ffffff;
+      --text-muted: #a0a0a0;
+      --border-color: #333333;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Translucent Glassmorphism Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      background: rgba(18, 18, 18, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .logo img {
+      height: 45px;
+      width: auto;
+      display: block;
+    }
+
+    /* Original Translucent Header Button Navigation */
+    nav {
+      display: flex;
+      align-items: center;
+    }
+
+    nav a {
+      color: var(--text-main);
+      text-decoration: none;
+      margin-left: 12px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 8px 18px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      transition: all 0.25s ease;
+      white-space: nowrap;
+    }
+
+    nav a:hover {
+      background: var(--accent-gold);
+      color: #000;
+      border-color: var(--accent-gold);
+      box-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+    }
+
+    /* Hamburger Button (Hidden on Desktop) */
+    .hamburger-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-main);
+      font-size: 1.8rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 5px;
+    }
+
+    .hamburger-btn:focus {
+      outline: none;
+    }
+
+    /* Bright Hero Background Area */
+    .hero {
+      flex: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 120px 20px 40px;
+      background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.45)), 
+                  url('/images/frfx.jfif') center/cover no-repeat;
+    }
+
+    .hero h1 {
+      font-size: 3.2rem;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    }
+
+    .hero p {
+      color: #ffffff;
+      font-size: 1.15rem;
+      max-width: 550px;
+      margin-bottom: 35px;
+      line-height: 1.6;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+      font-weight: 500;
+    }
+
+    .btn-main {
+      background-color: var(--accent-gold);
+      color: #000;
+      border: none;
+      padding: 18px 46px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .btn-main:hover {
+      background-color: var(--accent-gold-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(212, 175, 55, 0.5);
+    }
+
+    /* Dark Theme Modal Styling */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background-color: var(--card-bg);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      width: 100%;
+      max-width: 850px;
+      padding: 40px 35px;
+      position: relative;
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+      /* Global fix for landscape/short screens */
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: translateY(0);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      color: var(--text-main);
+    }
+
+    .modal-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .modal-header h2 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+
+    .modal-header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .locations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .location-box {
+      background: #161616;
+      border: 2px solid var(--border-color);
+      border-radius: 6px;
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: border-color 0.2s;
+    }
+
+    .location-box:hover {
+      border-color: var(--accent-gold);
+    }
+
+    .location-title {
+      font-size: 1.4rem;
+      color: var(--accent-gold);
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .location-details {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .location-details strong {
+      color: var(--text-main);
+    }
+
+    .btn-select-location {
+      background: transparent;
+      color: var(--text-main);
+      border: 1px solid var(--accent-gold);
+      padding: 12px;
+      width: 100%;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-select-location:hover {
+      background: var(--accent-gold);
+      color: #000;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      border-top: 1px solid var(--border-color);
+      background-color: var(--bg-dark);
+    }
+
+    /* Mobile Responsive Breakpoint (768px) */
+    @media (max-width: 768px) {
+      header {
+        padding: 12px 20px;
+      }
+
+      .logo img {
+        height: 38px;
+      }
+
+      .hamburger-btn {
+        display: block !important;
+      }
+
+      nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: rgba(22, 22, 22, 0.95);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border-bottom: 1px solid var(--border-color);
+        flex-direction: column;
+        padding: 15px 20px;
+        gap: 10px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+      }
+
+      nav.active {
+        display: flex !important;
+      }
+
+      nav a {
+        margin: 0;
+        width: 100%;
+        text-align: center;
+        padding: 12px;
+      }
+
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .btn-main {
+        width: 100%;
+        padding: 16px 20px;
+      }
+
+      .modal-card {
+        padding: 25px 15px;
+        max-height: 85vh; /* Slightly tighter on mobile portraits */
+      }
+
+      .modal-header h2 {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Translucent Banner -->
+<header>
+<a href="#" class="logo">
+      <img src="/images/logo.webp" alt="Barber Effect Logo">
+    </a>
+    
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle Navigation">
+      &#9776;
+    </button>
+
+    <nav id="navMenu">
+      <a href="https://effectbarber.com/hair-book" target="_blank">Hair Book</a>
+      <a href="/Appointment-Policy.html">Appointment &amp; Refund Policy</a>
+      <a href="https://effectbarber.com/job-apply" target="_blank">Job Apply</a>
+    </nav>
+  </header>
+
+  <!-- Step 1: Unified Landing Page -->
+  <main class="hero">
+    <h1>Barber Effect</h1>
+    <p>Premium cuts, classic hot towel shaves, and modern style tailored specifically for you.</p>
+    <button class="btn-main" id="openModalBtn">Book Appointment</button>
+  </main>
+
+  <!-- Step 2: Location Selection Modal (Dark Theme) -->
+  <div class="modal-overlay" id="locationModal">
+    <div class="modal-card">
+      <button class="close-btn" id="closeModalBtn">&times;</button>
+      
+      <div class="modal-header">
+        <h2>Select Your Shop</h2>
+        <p>Choose your preferred location to continue to booking</p>
+      </div>
+
+      <div class="locations-grid">
+        <!-- Location 1: Fairfax -->
+        <div class="location-box">
+          <div>
+            <div class="location-title">Fairfax</div>
+            <div class="location-details">
+              <strong>Fair Ridge Center</strong><br>
+              3903 Fair Ridge Dr Unit R<br>
+              Fairfax, VA 22033<br><br>
+              <span>Mon–Sat: 9:00 AM – 8:00 PM</span><br>
+              <span>Sun: 11:00 AM – 6:00 PM</span><br>
+              <span>Walk-ins Welcome</span><br>
+              <span><b>Phone: </b>+1 571-347-7206</span><br>
+            </div>
+          </div>
+          <button class="btn-select-location" onclick="window.open('https://effectbarber.com/', '_blank', 'noopener,noreferrer')">
+            Book at Fairfax
+          </button>
+        </div>
+
+        <!-- Location 2: Merrifield -->
+        <div class="location-box">
+          <div>
+            <div class="location-title">Merrifield / Vienna</div>
+            <div class="location-details">
+              <strong>Avenir Place</strong><br>
+              2672 Avenir Pl<br>
+              Vienna, VA 22180<br><br>
+              <span>Mon–Sat: 9:00 AM – 8:00 PM</span><br>
+              <span>Sun: 11:00 AM – 6:00 PM</span><br>
+              <span>Walk-ins Welcome</span><br>
+              <span><b>Phone: </b>+1 703-891-2095</span><br>
+            </div>
+          </div>
+          <button class="btn-select-location" onclick="window.open('https://barbereffectmerrifield.com/', '_blank', 'noopener,noreferrer')">
+            Book at Merrifield
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+      &copy; <span id="year"></span> Barber Effect · All rights reserved.
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const openBtn = document.getElementById('openModalBtn');
+    const closeBtn = document.getElementById('closeModalBtn');
+    const modal = document.getElementById('locationModal');
+    
+    // Hamburger Menu Elements
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const navMenu = document.getElementById('navMenu');
+
+    // Toggle Mobile Navigation
+    hamburgerBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navMenu.classList.toggle('active');
+    });
+
+    // Close Mobile Menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!hamburgerBtn.contains(e.target) && !navMenu.contains(e.target)) {
+        navMenu.classList.remove('active');
+      }
+    });
+
+    // Open Modal
+    openBtn.addEventListener('click', () => {
+      modal.classList.add('active');
+      navMenu.classList.remove('active');
+    });
+
+    // Close Modal
+    closeBtn.addEventListener('click', () => {
+      modal.classList.remove('active');
+    });
+
+    // Close Modal on Overlay Click
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html>
