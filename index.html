@@ -162,6 +162,7 @@
       left: 0;
       width: 100%;
       height: 100%;
+      height: 100dvh;
       background: rgba(0, 0, 0, 0.85);
       backdrop-filter: blur(8px);
       display: flex;
@@ -350,13 +351,43 @@
         padding: 16px 20px;
       }
 
+      .modal-overlay {
+        padding: 15px;
+      }
+
       .modal-card {
-        padding: 25px 15px;
-        max-height: 85vh; /* Slightly tighter on mobile portraits */
+        padding: 25px 20px;
+        max-height: 92vh;
+      }
+
+      .modal-header {
+        margin-bottom: 15px;
       }
 
       .modal-header h2 {
         font-size: 1.4rem;
+      }
+
+      .locations-grid {
+        gap: 12px; /* Shrunk from 20px */
+      }
+
+      .location-box {
+        padding: 15px; /* Shrunk from 25px */
+      }
+
+      .location-title {
+        font-size: 1.2rem;
+        margin-bottom: 5px;
+      }
+
+      .location-details {
+        font-size: 0.85rem;
+        margin-bottom: 15px;
+      }
+
+      .btn-select-location {
+        padding: 10px;
       }
     }
   </style>
